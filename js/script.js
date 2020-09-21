@@ -42,7 +42,7 @@
     optArticleTagsSelector = 'post-tags .list';
 
 
-  function generateTitleLinks() {
+  function generateTitleLinks(customSelector = '') {
     const titleList = document.querySelector(optTitleListSelector);
     /* remove contents of titleList */
 
@@ -78,107 +78,38 @@
     link.addEventListener('click', titleClickHandler);
   }
 
-  function generateTags() {
+  function generateTags(){
     /* find all articles */
-    const findArticles = document.querySelectorAll(optArticleSelector);
-    console.log(findArticles);
+    const articles = document.querySelectorAll(optArticleSelector);
     /* START LOOP: for every article: */
-    for (let findArticle of findArticles) {
+    for (let article of articles){
       /* find tags wrapper */
-      const findTags = document.querySelector(optArticleTagsSelector);
-      console.log(findTags);
+      const tagsList = article.querySelector(optArticleTagsSelector);
       /* make html variable with empty string */
       let html = '';
-      console.log(html);
       /* get tags from data-tags attribute */
-
-      let articleTag = findArticle.getAttribute('data-tags');
+      const articleTags = article.getAttribute('data-tags');
+      console.log('article: ' + articleTags);
       /* split tags into array */
-      const articleTagsArray = articleTag.split(' ');
-
-      console.log(articleTagsArray);
+      const articleTagsArray = articleTags.split(' ');
+      console.log('array: ' + articleTagsArray);
       /* START LOOP: for each tag */
-      for (let tag of articleTagsArray) {
+      for(let tag of articleTagsArray){
+
+        console.log('tag is: ' + tag);
         /* generate HTML of the link */
-        console.log(tag);
-        const tagHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+        let tagHtml = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
         /* add generated code to html variable */
-        html = html + tagHTML;
-        console.log('co to jest' + html);
-        /* END LOOP: for each tag */
-      }
+        html = html + tagHtml;
+        console.log('html is: ' + html);
+      /* END LOOP: for each tag */
+     }
       /* insert HTML of all the links into the tags wrapper */
-      const tagWrapperSelector = document.querySelectorAll(optArticleTagsSelector);
-      tagWrapperSelector.innerHTML = html;
-      console.log('mamo pomocy ' + html);
-    }
-
-    function tagClickHandler(event) {
-      /* prevent default action for this event */
-      event.preventDefault();
-      /* make new constant named "clickedElement" and give it the value of "this" */
-      const clickedElement = this;
-      /* make a new constant "href" and read the attribute "href" of the clicked element */
-      const href = clickedElement.getAttribute('href');
-      /* make a new constant "tag" and extract tag from the "href" constant */
-      const tag = document.getAttribute(href);
-      console.log('pokaz tag ' + tag);
-      /* find all tag links with class active */
-      const activeTags = tag.querySelectorAll('a.active[href^="#tag-"]');
-      console.log('active ' + activeTags)
-      /* START LOOP: for each active tag link */
-      for (let activeTag of activeTags) {
-        /* remove class active */
-        activeTag.classList.remove('active');
-        /* END LOOP: for each active tag link */
-      }
-      /* find all tag links with "href" attribute equal to the "href" constant */
-        
-
-
-
-
-      /* START LOOP: for each found tag link */
-
-      /* add class active */
-
-      /* END LOOP: for each found tag link */
-
-      /* execute function "generateTitleLinks" with article selector as argument */
-    }
-
-    function addClickListenersToTags() {
-      /* find all links to tags */
-
-      /* START LOOP: for each link */
-
-      /* add tagClickHandler as event listener for that link */
-
-      /* END LOOP: for each link */
-    }
-
-    addClickListenersToTags();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+     tagsList.innerHTML = html;
+     console.log('tagsList.innerHTML: ' + tagsList.innerHTML);
     /* END LOOP: for every article: */
+   } 
   }
-
-  generateTags();
   
+  generateTags();
 }
